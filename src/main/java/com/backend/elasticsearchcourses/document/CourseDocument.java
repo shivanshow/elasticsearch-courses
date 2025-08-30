@@ -2,13 +2,14 @@ package com.backend.elasticsearchcourses.document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.CompletionField;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.core.suggest.Completion;
 
 @Document(indexName = "courses")
 @Data
@@ -46,4 +47,7 @@ public class CourseDocument {
 
     @Field(type = FieldType.Date, format = {}, pattern = "uuuu-MM-dd'T'HH:mm:ssX")
     private String nextSessionDate;
+
+    @CompletionField(maxInputLength = 100)
+    private Completion suggest;
 }

@@ -6,6 +6,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.CompletionSuggestOption;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.json.JsonData;
 import com.backend.elasticsearchcourses.document.CourseDocument;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CourseSearchService {
 
-    private final ElasticsearchClient client;
+    private final ElasticsearchClient elasticsearchClient;
 
     public Page<CourseDto> searchCourses(
             String keyword,
@@ -106,6 +107,7 @@ public class CourseSearchService {
                     .multiMatch(mm -> mm
                             .fields("title", "description")
                             .query(keyword)
+                            .fuzziness("AUTO")
                     )
             );
         }
@@ -132,7 +134,7 @@ public class CourseSearchService {
         log.info("Executing Elasticsearch Query: {}", finalQuery.toString());
 
         // Execute search
-        SearchResponse<CourseDocument> response = client.search(searchRequestBuilder.build(), CourseDocument.class);
+        SearchResponse<CourseDocument> response = elasticsearchClient.search(searchRequestBuilder.build(), CourseDocument.class);
 
         // Convert hits to CourseDto
         List<CourseDto> results = getCourseDtos(response);
@@ -173,6 +175,29 @@ public class CourseSearchService {
                         doc.getNextSessionDate() != null ? Instant.parse(doc.getNextSessionDate()) : null
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public List<String> suggestTitles(String query) throws IOException {
+        SearchResponse<Void> response = elasticsearchClient.search(s -> s
+                        .index("courses")
+                        .suggest(su -> su
+                                .suggesters("course-suggest", sg -> sg
+                                        .prefix(query)
+                                        .completion(c -> c
+                                                .field("suggest")
+                                                .size(10) // max 10 results
+                                        )
+                                )
+                        ),
+                Void.class
+        );
+
+        return response.suggest()
+                .get("course-suggest").stream()
+                .flatMap(s -> s.completion().options().stream())
+                .map(CompletionSuggestOption::text)
+                .distinct()
+                .toList();
     }
 }
 

@@ -5,6 +5,7 @@ import com.backend.elasticsearchcourses.repository.CourseRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.elasticsearch.core.suggest.Completion;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
@@ -32,6 +33,11 @@ public class DataLoader implements CommandLineRunner {
                 is,
                 new TypeReference<List<CourseDocument>>() {}
         );
+
+        courses.forEach(course ->
+                course.setSuggest(new Completion(new String[]{course.getTitle()}))
+        );
+
         courseRepository.saveAll(courses);
         System.out.println("Loaded " + courses.size() + " courses into Elasticsearch");
     }

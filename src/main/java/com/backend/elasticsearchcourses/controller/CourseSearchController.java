@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -49,5 +50,11 @@ public class CourseSearchController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/search/suggest")
+    public List<String> suggest(@RequestParam String q) throws IOException {
+        return courseSearchService.suggestTitles(q);
+    }
+
 }
 
