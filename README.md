@@ -49,13 +49,13 @@ curl http://localhost:9200
 
 ## 2. Build and Run Spring Boot Application
 
-```bash
+The project uses Maven Wrapper, so you don’t need Maven installed.
+
 # Build the application
-mvn clean install
+./mvnw clean install -DskipTests  //you can manually run the test class to see
 
 # Run the application
-mvn spring-boot:run
-```
+./mvnw spring-boot:run
 
 The application will start on `http://localhost:8080` by default.
 
