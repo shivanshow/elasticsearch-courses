@@ -49,15 +49,15 @@ curl http://localhost:9200
 
 ## 2. Build and Run Spring Boot Application
 
-The project uses Maven Wrapper, so you don’t need Maven installed.
+You can use Maven Wrapper (`./mvnw`) so users don't need Maven installed.
 
-# Build the application
-./mvnw clean install -DskipTests  //you can manually run the test class to see
+```bash
+# Build the app (skip tests to avoid failures)
+./mvnw clean install -DskipTests
 
-# Run the application
+# Run the app
 ./mvnw spring-boot:run
-
-The application will start on `http://localhost:8080` by default.
+```
 
 ## 3. Populate Index with Sample Data
 
