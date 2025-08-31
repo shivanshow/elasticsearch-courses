@@ -1,0 +1,50 @@
+
+1. Basic Parameter Search Only
+        http://localhost:8080/api/search?q=algebra
+        http://localhost:8080/api/search?category=Math
+        http://localhost:8080/api/search?type=COURSE
+        http://localhost:8080/api/search?minAge=10&maxAge=15
+        http://localhost:8080/api/search?minPrice=50&maxPrice=150
+        http://localhost:8080/api/search?startDate=2025-09-01T00:00:00Z
+
+2. Pagination Only
+        http://localhost:8080/api/search?page=0&size=5
+        http://localhost:8080/api/search?page=1&size=5
+        http://localhost:8080/api/search?page=2&size=3
+        http://localhost:8080/api/search?page=0&size=10
+        http://localhost:8080/api/search?page=1&size=10
+        http://localhost:8080/api/search?page=0&size=2
+
+3. Sorting Only
+        http://localhost:8080/api/search?sort=upcoming
+        http://localhost:8080/api/search?sort=priceAsc
+        http://localhost:8080/api/search?sort=priceDesc
+        http://localhost:8080/api/search?sort=upcoming&page=0&size=5
+        http://localhost:8080/api/search?sort=priceAsc&page=1&size=5
+        http://localhost:8080/api/search?sort=priceDesc&page=2&size=3
+
+4. Mix of Basic Search + Pagination + Sorting
+        http://localhost:8080/api/search?q=algebra&sort=priceAsc&page=0&size=5
+        http://localhost:8080/api/search?category=Art&sort=priceDesc&page=1&size=3
+        http://localhost:8080/api/search?q=python&type=COURSE&sort=upcoming&page=0&size=10
+        http://localhost:8080/api/search?minPrice=100&maxPrice=200&sort=priceAsc&page=0&size=5
+        http://localhost:8080/api/search?startDate=2025-09-01T00:00:00Z&category=Math&sort=upcoming&page=1&size=5
+        http://localhost:8080/api/search?q=creative&category=Art&sort=priceDesc&page=0&size=10
+
+5. Autocomplete Only
+        http://localhost:8080/api/search/suggest?q=Intro
+        http://localhost:8080/api/search/suggest?q=Adv
+        http://localhost:8080/api/search/suggest?q=Cre
+        http://localhost:8080/api/search/suggest?q=Py
+        http://localhost:8080/api/search/suggest?q=Geo
+        http://localhost:8080/api/search/suggest?q=Public
+
+6. Mix of Suggestion + Search
+        http://localhost:8080/api/search?q=advancd algebra&category=Math&sort=priceDesc&page=0&size=5
+        http://localhost:8080/api/search?q=python&minPrice=150&maxPrice=200&sort=upcoming&page=1&size=3
+        http://localhost:8080/api/search?q=creative writng&category=Art&sort=priceAsc&page=0&size=5
+        http://localhost:8080/api/search?q=public speak&startDate=2025-09-01T00:00:00Z&sort=upcoming&page=0&size=10
+        http://localhost:8080/api/search?q=introduction&minAge=10&maxAge=15&category=Math&sort=priceDesc&page=0&size=5
+        http://localhost:8080/api/search?q=geometry&category=Math&minPrice=100&maxPrice=150&sort=priceAsc&page=1&size=5
+
+
