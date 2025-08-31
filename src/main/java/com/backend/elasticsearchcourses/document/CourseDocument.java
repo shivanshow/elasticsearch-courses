@@ -2,6 +2,7 @@ package com.backend.elasticsearchcourses.document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -16,6 +17,7 @@ import org.springframework.data.elasticsearch.core.suggest.Completion;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Builder
 public class CourseDocument {
 
     @Id
